@@ -12,3 +12,22 @@ export type AppContextValue = {
 };
 
 export type ThemeType = typeof lightTheme | typeof darkTheme;
+
+export type ApiResponse = {
+	date: string;
+	historical: boolean;
+	info: {
+		rate: number;
+	};
+	motd: {
+		msg: string;
+		url: string;
+	};
+	query: {
+		amount: number;
+		from: string;
+		to: string;
+	};
+	result: number;
+	success: boolean;
+};

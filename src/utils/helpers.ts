@@ -17,4 +17,13 @@ export const showToast = (
 		animation: true,
 	});
 
-// Add more helper functions
+export const getErrorMessage = (errObj: any) => {
+	const errResponse = errObj.response;
+	const errorMessage =
+		errResponse && errResponse.data
+			? errResponse.data.message === "Validation error"
+				? "Selected currency is not available"
+				: errResponse.data.message
+			: "Something went wrong! Please try again";
+	return errorMessage;
+};

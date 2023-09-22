@@ -6,12 +6,13 @@ import CountryPicker, { Country, CountryCode } from "react-native-country-picker
 
 type Props = {
 	text: string;
+	defaultCountryCode: CountryCode;
 	onSelect: (country: Country) => void;
 } & TextInputProps;
 
-export default function CurrencyTile({ text, onSelect, ...props }: Props) {
+export default function CurrencyTile({ text, onSelect, defaultCountryCode, ...props }: Props) {
 	const { styles, theme } = useStyles(createStyles);
-	const [countryCode, setCountryCode] = React.useState<CountryCode>("NG");
+	const [countryCode, setCountryCode] = React.useState<CountryCode>(defaultCountryCode);
 
 	return (
 		<View style={styles.container}>

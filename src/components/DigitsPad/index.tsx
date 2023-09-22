@@ -16,9 +16,12 @@ import CustomButton from "../CustomButton";
 
 type Props = {
 	text: string;
+	isDisabled: boolean;
+	isLoading: boolean;
 	onDigitPress: (text: string) => void;
 	onClear: () => void;
 	onRemove: () => void;
+	onSubmit: () => void;
 };
 
 const { height, width } = Dimensions.get("window");
@@ -26,7 +29,15 @@ const keySize = width * 0.2;
 const keyTextSize = keySize / 3;
 const keyGap = keySize * 0.2;
 
-export default function DigitsPad({ text, onDigitPress, onClear, onRemove }: Props) {
+export default function DigitsPad({
+	text,
+	isDisabled,
+	isLoading,
+	onDigitPress,
+	onClear,
+	onRemove,
+	onSubmit,
+}: Props) {
 	const { styles, theme } = useStyles(createStyles);
 	const inset = useSafeAreaInsets();
 
@@ -68,7 +79,13 @@ export default function DigitsPad({ text, onDigitPress, onClear, onRemove }: Pro
 					}}
 					digit="0"
 				/>
-				<CustomButton label="Convert" style={{ flex: 1 }} />
+				<CustomButton
+					disabled={isDisabled}
+					isLoading={isLoading}
+					label="Convert"
+					style={{ flex: 1 }}
+					onPress={onSubmit}
+				/>
 			</View>
 		</View>
 	);
