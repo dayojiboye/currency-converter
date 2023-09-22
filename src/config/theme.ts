@@ -13,7 +13,7 @@ const commonValues = {
 
 export const lightTheme = {
 	...commonValues,
-	background: "rgb(242, 242, 242)",
+	background: "#fff",
 	text: "#000",
 };
 
