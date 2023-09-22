@@ -1,11 +1,13 @@
 import { ThemeType } from "../types";
 
 const commonValues = {
-	green: "#4CAF4F",
-	inputBg: "#FAF0D3",
+	green: "#81A891",
 	white: "#fff",
 	disabled: "#949191",
 	black: "#000000",
+	cream: "#FFFCF3",
+	fade: "#ccc",
+	mute: "#eee",
 	// add more
 };
 

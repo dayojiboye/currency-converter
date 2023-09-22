@@ -13,7 +13,8 @@ export default function AppRoutes() {
 				headerTitleAlign: "center",
 				headerShadowVisible: false,
 				headerMode: "screen",
-				headerShown: false,
+				headerLeftContainerStyle: { paddingLeft: 20 },
+				headerRightContainerStyle: { paddingHorizontal: 20 },
 			}}
 		>
 			<Stack.Screen name="Home" component={Home} />

@@ -1,24 +1,53 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CustomButton from "../components/CustomButton";
-import { ThemeType } from "../types";
+import { RootStackParamList, ThemeType } from "../types";
 import useStyles from "../hooks/useStyles";
-import useStore from "../hooks/useStore";
 import CustomStatusBar from "../components/CustomStatusBar";
+import { StackScreenProps } from "@react-navigation/stack";
+import Icon from "react-native-vector-icons/Octicons";
+import CurrencyTile from "../components/CurrencyTile";
+import { Country } from "react-native-country-picker-modal";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function Home() {
-	const { styles } = useStyles(createStyles);
-	const { toggleThemeMode, themeMode } = useStore();
+type Props = StackScreenProps<RootStackParamList>;
+
+export default function Home({ navigation }: Props) {
+	const { styles, theme } = useStyles(createStyles);
+	const [fromCountry, setFromCountry] = React.useState<Country>();
+	const [toCountry, setToCountry] = React.useState<Country>();
+	const [fromAmount, setFromAmount] = React.useState<string>("");
+	const [toAmount, setToAmount] = React.useState<string>("");
+
+	React.useEffect(() => {
+		navigation.setOptions({
+			title: "",
+			headerLeft: (props) => <Icon name="graph" color={theme.green} size={25} />,
+			headerRight: (props) => <Icon name="bookmark" color={theme.green} size={30} />,
+			headerStyle: { backgroundColor: theme.cream },
+		});
+	}, [navigation]);
 
 	return (
 		<>
 			<CustomStatusBar />
-			<View style={styles.container}>
-				<CustomButton
-					label={`Switch to ${themeMode === "dark" ? "light" : "dark"} theme`}
-					onPress={() => toggleThemeMode(themeMode === "dark" ? "light" : "dark")}
-				/>
-			</View>
+			<KeyboardAwareScrollView
+				style={{ flex: 1, backgroundColor: theme.cream }}
+				contentContainerStyle={styles.container}
+				keyboardShouldPersistTaps="handled"
+			>
+				<Text style={styles.result}>1 USD = 1.315 SGD</Text>
+				<View style={styles.contents}>
+					<CurrencyTile
+						onSelect={(country) => setFromCountry(country)}
+						onChangeText={(text) => setFromAmount(text)}
+					/>
+					<View style={styles.divider} />
+					<CurrencyTile
+						onSelect={(country) => setToCountry(country)}
+						onChangeText={(text) => setToAmount(text)}
+					/>
+				</View>
+			</KeyboardAwareScrollView>
 		</>
 	);
 }
@@ -26,10 +55,22 @@ export default function Home() {
 const createStyles = (theme: ThemeType) =>
 	StyleSheet.create({
 		container: {
-			flex: 1,
-			justifyContent: "center",
-			alignItems: "center",
 			paddingHorizontal: 20,
-			backgroundColor: theme.background,
+			paddingTop: 20,
+			paddingBottom: 50,
+		},
+		result: {
+			fontSize: 20,
+			color: theme.text,
+			fontWeight: "500",
+			textAlign: "center",
+		},
+		contents: {
+			marginTop: 48,
+		},
+		divider: {
+			backgroundColor: theme.mute,
+			width: "100%",
+			height: 2,
 		},
 	});
