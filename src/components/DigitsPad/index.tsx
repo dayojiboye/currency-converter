@@ -14,41 +14,60 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
 import CustomButton from "../CustomButton";
 
+type Props = {
+	text: string;
+	onDigitPress: (text: string) => void;
+	onClear: () => void;
+	onRemove: () => void;
+};
+
 const { height, width } = Dimensions.get("window");
 const keySize = width * 0.2;
 const keyTextSize = keySize / 3;
 const keyGap = keySize * 0.2;
 
-export default function DigitsPad() {
+export default function DigitsPad({ text, onDigitPress, onClear, onRemove }: Props) {
 	const { styles, theme } = useStyles(createStyles);
 	const inset = useSafeAreaInsets();
 
 	return (
 		<View style={[styles.container, { paddingBottom: inset.bottom }]}>
 			<View style={styles.row}>
-				<DigitButton onPress={() => {}} digit="7" />
-				<DigitButton onPress={() => {}} digit="8" />
-				<DigitButton onPress={() => {}} digit="9" />
-				<DigitButton onPress={() => {}}>
+				<DigitButton onPress={() => onDigitPress("7")} digit="7" />
+				<DigitButton onPress={() => onDigitPress("8")} digit="8" />
+				<DigitButton onPress={() => onDigitPress("9")} digit="9" />
+				<DigitButton onPress={onClear}>
 					<Icon name="trash-outline" color={theme.green} size={30} />
 				</DigitButton>
 			</View>
 			<View style={styles.row}>
-				<DigitButton onPress={() => {}} digit="4" />
-				<DigitButton onPress={() => {}} digit="5" />
-				<DigitButton onPress={() => {}} digit="6" />
-				<DigitButton onPress={() => {}}>
+				<DigitButton onPress={() => onDigitPress("4")} digit="4" />
+				<DigitButton onPress={() => onDigitPress("5")} digit="5" />
+				<DigitButton onPress={() => onDigitPress("6")} digit="6" />
+				<DigitButton onPress={onRemove}>
 					<Icon name="arrow-back" color={theme.green} size={30} />
 				</DigitButton>
 			</View>
 			<View style={styles.row}>
-				<DigitButton onPress={() => {}} digit="1" />
-				<DigitButton onPress={() => {}} digit="2" />
-				<DigitButton onPress={() => {}} digit="3" />
-				<DigitButton onPress={() => {}} digit="." />
+				<DigitButton onPress={() => onDigitPress("1")} digit="1" />
+				<DigitButton onPress={() => onDigitPress("2")} digit="2" />
+				<DigitButton onPress={() => onDigitPress("3")} digit="3" />
+				<DigitButton
+					onPress={() => {
+						if (text.length < 1 || text.includes(".")) return;
+						onDigitPress(".");
+					}}
+					digit="."
+				/>
 			</View>
 			<View style={[styles.row, { alignItems: "center" }]}>
-				<DigitButton onPress={() => {}} digit="0" />
+				<DigitButton
+					onPress={() => {
+						// if (text.length < 1) return;
+						onDigitPress("0");
+					}}
+					digit="0"
+				/>
 				<CustomButton label="Convert" style={{ flex: 1 }} />
 			</View>
 		</View>
@@ -62,14 +81,14 @@ const DigitButton = ({
 	children,
 }: {
 	digit?: string;
-	onPress: (digit: string) => void;
+	onPress: () => void;
 	style?: StyleProp<ViewStyle>;
 	children?: JSX.Element;
 }) => {
 	const { styles, theme } = useStyles(createStyles);
 
 	return (
-		<TouchableOpacity style={[styles.digitButton, style]}>
+		<TouchableOpacity style={[styles.digitButton, style]} onPress={onPress}>
 			{digit ? <Text style={styles.digitButtonText}>{digit}</Text> : null}
 			{children}
 		</TouchableOpacity>

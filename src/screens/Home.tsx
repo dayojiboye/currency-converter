@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { RootStackParamList, ThemeType } from "../types";
 import useStyles from "../hooks/useStyles";
@@ -22,11 +22,23 @@ export default function Home({ navigation }: Props) {
 	React.useEffect(() => {
 		navigation.setOptions({
 			title: "",
-			headerLeft: (props) => <Icon name="graph" color={theme.green} size={25} />,
-			headerRight: (props) => <Icon name="bookmark" color={theme.green} size={30} />,
+			headerLeft: (props) => (
+				<TouchableOpacity>
+					<Icon name="graph" color={theme.green} size={25} />
+				</TouchableOpacity>
+			),
+			headerRight: (props) => (
+				<TouchableOpacity>
+					<Icon name="bookmark" color={theme.green} size={30} />
+				</TouchableOpacity>
+			),
 			headerStyle: { backgroundColor: theme.cream },
 		});
 	}, [navigation]);
+
+	// React.useEffect(() => {
+	// 	console.log(fromAmount);
+	// }, [fromAmount]);
 
 	return (
 		<>
@@ -41,18 +53,24 @@ export default function Home({ navigation }: Props) {
 					<Text style={styles.result}>1 USD = 1.315 SGD</Text>
 				</View>
 				<View style={styles.contents}>
-					<CurrencyTile
-						onSelect={(country) => setFromCountry(country)}
-						onChangeText={(text) => setFromAmount(text)}
-					/>
+					<CurrencyTile text={fromAmount} onSelect={(country) => setFromCountry(country)} />
 					<View style={styles.divider} />
 					<CurrencyTile
+						text={toAmount}
+						value={toAmount}
 						onSelect={(country) => setToCountry(country)}
-						onChangeText={(text) => setToAmount(text)}
 					/>
 				</View>
 			</KeyboardAwareScrollView>
-			<DigitsPad />
+			<DigitsPad
+				text={fromAmount}
+				onDigitPress={(text: string) => setFromAmount(fromAmount.concat(text))}
+				onClear={() => setFromAmount("")}
+				onRemove={() => {
+					const updatedInput = fromAmount.slice(0, -1);
+					setFromAmount(updatedInput);
+				}}
+			/>
 		</>
 	);
 }
