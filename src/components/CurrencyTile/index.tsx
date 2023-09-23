@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInputProps, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { ThemeType } from "../../types";
 import useStyles from "../../hooks/useStyles";
@@ -8,7 +8,7 @@ type Props = {
 	text: string;
 	defaultCountryCode: CountryCode;
 	onSelect: (country: Country) => void;
-} & TextInputProps;
+};
 
 export default function CurrencyTile({ text, onSelect, defaultCountryCode, ...props }: Props) {
 	const { styles, theme } = useStyles(createStyles);

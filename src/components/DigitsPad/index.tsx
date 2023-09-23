@@ -102,7 +102,7 @@ const DigitButton = ({
 	style?: StyleProp<ViewStyle>;
 	children?: JSX.Element;
 }) => {
-	const { styles, theme } = useStyles(createStyles);
+	const { styles } = useStyles(createStyles);
 
 	return (
 		<TouchableOpacity style={[styles.digitButton, style]} onPress={onPress}>
@@ -134,7 +134,6 @@ const createStyles = (theme: ThemeType) =>
 			height: keySize,
 			justifyContent: "center",
 			alignItems: "center",
-			// backgroundColor: "red",
 		},
 		digitButtonText: {
 			fontSize: keyTextSize,
