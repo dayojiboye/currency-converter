@@ -3,7 +3,7 @@ export type ApiEndpints = Readonly<{
 }>;
 
 const apiEndpoints: ApiEndpints = {
-	getExchangeRate: "https://api.exchangerate.host/convert",
+	getExchangeRate: "https://api.apilayer.com/exchangerates_data/convert",
 };
 
 export default apiEndpoints;

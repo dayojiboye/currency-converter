@@ -13,6 +13,7 @@ import { appState, toastType } from "../enums";
 import axios from "axios";
 import apiEndpoints from "../config/api-endpoints";
 import { getErrorMessage, showToast } from "../utils/helpers";
+import { API_KEY } from "@env";
 
 type Props = StackScreenProps<RootStackParamList>;
 
@@ -78,6 +79,9 @@ export default function Home({ navigation }: Props) {
 					from: fromCountry.currency[0],
 					to: toCountry.currency[0],
 					amount: Number(fromAmount),
+				},
+				headers: {
+					apikey: API_KEY,
 				},
 			});
 			const { status, data } = response || {};

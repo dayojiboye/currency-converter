@@ -1,7 +1,9 @@
 declare module "*.png";
 declare module "*.jpeg";
 declare module "*.jpg";
-declare module "@env" {}
+declare module "@env" {
+	export const API_KEY: string;
+}
 declare module "*.svg" {
 	import React from "react";
 	import { SvgProps } from "react-native-svg";

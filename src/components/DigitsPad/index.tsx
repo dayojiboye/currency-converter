@@ -68,7 +68,7 @@ export default function DigitsPad({
 						if (text.length < 1 || text.includes(".")) return;
 						onDigitPress(".");
 					}}
-					digit="."
+					digit="&#xb7;"
 				/>
 			</View>
 			<View style={[styles.row, { alignItems: "center" }]}>
